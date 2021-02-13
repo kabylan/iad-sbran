@@ -10,17 +10,22 @@ using System.Web;
 
 namespace Sbran.Domain.Chat
 {
-    public class ChatHub : Hub
+    [Authorize]
+    public class ChattingHub : Hub
     {
-        [Authorize]
         public async Task Send(string message, string to)
         {
-            var user = Context.User;
-            var userName = user.Identity.Name;
-            // получаем роль
-            var userRole = user.FindFirst(ClaimTypes.Role)?.Value;
-            // принадлежит ли пользователь роли "admins"
-            var isAdmin = user.IsInRole("admin");
+            var userName = Context.User.Identity.Name;
+
+            if (Context.UserIdentifier != to) // если получатель и текущий пользователь не совпадают
+                await Clients.User(Context.UserIdentifier).SendAsync("Receive", message, userName);
+            await Clients.User(to).SendAsync("Receive", message, userName);
+        }
+
+        public override async Task OnConnectedAsync()
+        {
+            await Clients.All.SendAsync("Notify", $"Приветствуем {Context.UserIdentifier}");
+            await base.OnConnectedAsync();
         }
     }
 

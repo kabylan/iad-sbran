@@ -86,5 +86,13 @@
   <ItemGroup>
     <None Remove="..\.dockerignore" />
   </ItemGroup>
+	
+  <ItemGroup>
+    <Content Include="ClientApp\src\assets\images\profilephotos\alex.jpeg" />
+    <Content Include="ClientApp\src\assets\images\profilephotos\alisa.jpg" />
+    <Content Include="ClientApp\src\assets\images\profilephotos\lora.jpg" />
+    <Content Include="ClientApp\src\assets\images\profilephotos\nastya.jpg" />
+    <Content Include="ClientApp\src\assets\images\profilephotos\tom.jpg" />
+  </ItemGroup>
 
 </Project>

@@ -18,9 +18,11 @@ export class SigninComponent {
 
   login(login: string, password: string) {
     this.authService.login(login, password).subscribe(
+
       accountDetailsResult => {
         this.router.navigateByUrl(`/profile/${accountDetailsResult.profileId}/employee/${accountDetailsResult.employeeId}`);
       },
+
       error => {
         console.log(error);
         this.errorMessage = error.error_description;

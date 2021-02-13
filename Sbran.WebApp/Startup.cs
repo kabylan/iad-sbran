@@ -17,6 +17,7 @@ using System;
 using System.Text;
 using Sbran.Domain.Chat;
 using Microsoft.AspNetCore.SignalR;
+using System.Threading.Tasks;
 
 namespace Sbran.WebApp
 {
@@ -55,6 +56,24 @@ namespace Sbran.WebApp
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.FromMinutes(1)
+                };
+
+                x.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+
+                        // If the request is for our hub...
+                        var path = context.HttpContext.Request.Path;
+                        if (!string.IsNullOrEmpty(accessToken) &&
+                            (path.StartsWithSegments("/chattinghub")))
+                        {
+                            // Read the token out of the query string
+                            context.Token = accessToken;
+                        }
+                        return Task.CompletedTask;
+                    }
                 };
             });
 
@@ -150,10 +169,20 @@ namespace Sbran.WebApp
                 {
                     builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                 });
-            }); 
-            
+            });
+
+            services.AddCors(o => o.AddPolicy("CorsPolicy", builder => {
+                builder
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials()
+                .WithOrigins("https://localhost:44343/");
+            }));
+
+
             services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
             services.AddSignalR();
+            services.AddSignalRCore();
         }
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -179,17 +208,22 @@ namespace Sbran.WebApp
 				app.UseSpaStaticFiles();
 			}
 
-			app.UseRouting();
+
+            app.UseCors("CorsPolicy");
+
+
+            app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
 			{
-				endpoints.MapControllerRoute(
+                endpoints.MapHub<ChattingHub>("/chattinghub");
+
+                endpoints.MapControllerRoute(
 					name: "default",
 					pattern: "{controller}/{action=Index}/{id?}");
-                endpoints.MapHub<ChatHub>("/chathub");
             });
 
 			app.UseSpa(spa =>

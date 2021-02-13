@@ -1,27 +1,170 @@
-<form class="form-signin" (submit)="login(loginBox.value, passwordBox.value)">
-  <div class="title">
-    <span class="main-title text-uppercase text-center text-dark">Вход в систему</span>
-    <br>
+<!-- PROFILE -->
+<div class="container">
+  <!-- PROFILE SIDEBAR -->
+  <div class="row">
+
+    <div class="col-md-2 pr-md-0">
+      <div class="profile-menu border">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/profile/{{profileId}}/employee/{{employeeId}}">
+              <i class="fa fa-home fa-fw"></i>
+              Главная
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" routerLink="/chat">
+              <i class="fa fa-envelope-o fa-fw"></i>
+              Сообщения
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="profile/{{profileId}}/employee/{{employeeId}}/invitation">
+              <i class="fa fa-globe fa-fw"></i>
+              Приглашения
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-plane fa-fw"></i>
+              Выезды
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-university fa-fw"></i>
+              Публикации
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-briefcase fa-fw"></i>
+              Проекты
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-cogs fa-fw"></i>
+              Настройки
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-flag-o fa-fw"></i>
+              Помощь
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md m-1 pt-1 row rounded-lg overflow-hidden shadow">
+
+
+      <div class="col-md-5">
+        <input class="form-control form-control-sm" type="text" placeholder="Поиск пользователя" aria-label="default input example">
+        <br />
+        <div class="list-group">
+          <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+
+            <div class="pull-left mr-2">
+              <img src="../../../assets/images/profilephotos/alisa.jpg" class="img-reponsive img-rounded rounded-circle" />
+            </div>
+            <div class="d-flex m-1 justify-content-between">
+              <h6 class="mb-1">Алиса</h6>
+              <small>11:30</small>
+            </div>
+            <small>
+              Сегодня встреча...
+            </small>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+
+            <div class="pull-left mr-2">
+              <img src="../../../assets/images/profilephotos/alex.jpeg" class="img-reponsive img-rounded rounded-circle" />
+            </div>
+            <div class="d-flex m-1 justify-content-between">
+              <h6 class="mb-1">Евгений</h6>
+              <small>вчера</small>
+            </div>
+            <small>
+              Отправь отчёт
+            </small>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+
+            <div class="pull-left mr-2">
+              <img src="../../../assets/images/profilephotos/lora.jpg" class="img-reponsive img-rounded rounded-circle" />
+            </div>
+            <div class="d-flex m-1 justify-content-between">
+              <h6 class="mb-1">Настя</h6>
+              <small>25.01.2021</small>
+            </div>
+            <small>
+              Вы: Привет, как ты?
+            </small>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+
+            <div class="pull-left mr-2">
+              <img src="../../../assets/images/profilephotos/tom.jpg" class="img-reponsive img-rounded rounded-circle" />
+            </div>
+            <div class="d-flex m-1 justify-content-between">
+              <h6 class="mb-1">Рахаб</h6>
+              <small>21.11.2020</small>
+            </div>
+            <small>
+              Вы: Мы должны...
+            </small>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+
+            <div class="pull-left mr-2">
+              <img src="../../../assets/images/profilephotos/nastya.jpg" class="img-reponsive img-rounded rounded-circle" />
+            </div>
+            <div class="d-flex m-1 justify-content-between">
+              <h6 class="mb-1">Елена</h6>
+              <small>21.09.2020</small>
+            </div>
+            <small>
+              Ладно, увидимся
+            </small>
+          </a>
+        </div>
+
+      </div>
+      <div class="col-md-5">
+        <!--<div id="loginBlock">
+      Токен:<br />
+      <input id="token" type="text" value="{{accessToken}}" />
+    </div>-->
+
+        <form id="inputForm" (submit)="sendMessage(message.value, receiver.value)">
+          <input #message type="text" id="message" placeholder="Введите сообщение" />
+          <input #receiver type="text" id="receiver" placeholder="Введите получателя" />
+          <input type="submit" value="Отправить" />
+        </form>
+        <div id="chatroom"></div>
+
+
+        <!-- Typing area -->
+        <form action="#" class="bg-light">
+          <div class="input-group">
+            <input type="text" placeholder="Type a message" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
+            <div class="input-group-append">
+              <button id="button-addon2" type="submit" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
   </div>
-  <div class="form-group">
-    <input #loginBox id="login" name="login" type="text" class="form-control" placeholder="Электронный адрес" autofocus="autofocus" required="required">
-  </div>
-  <div class="form-group">
-    <input #passwordBox id="password" name="password" type="password" class="form-control" placeholder="Пароль" required="required">
-  </div>
-  <!-->
-  <div class="form-group subform">
-    <label class="checkbox-inline" for="rememberMe">
-      <input type="checkbox" (change)="onChangeRememberMe($event.target.checked)">
-      Запомнить
-    </label>
-    <a href="#" class="resetpassword">Сбросить пароль</a>
-  </div>
-  </!-->
-  <div class="form-group">
-    <button class="btn btn-signin btn-warning" type="submit">Войти</button>
-  </div>
-  <div class="form-group text-center">
-    <a class="signup" routerLink="/singup">Зарегистрироваться</a>
-  </div>
-</form>
+
+
+
+</div>
+
+
+
+
