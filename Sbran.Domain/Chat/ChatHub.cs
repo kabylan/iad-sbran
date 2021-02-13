@@ -24,7 +24,7 @@ namespace Sbran.Domain.Chat
 
         public override async Task OnConnectedAsync()
         {
-            await Clients.All.SendAsync("Notify", $"Приветствуем {Context.UserIdentifier}");
+            await Clients.All.SendAsync("Notify", $"Приветствуем {Context.UserIdentifier}", Context.UserIdentifier);
             await base.OnConnectedAsync();
         }
     }
