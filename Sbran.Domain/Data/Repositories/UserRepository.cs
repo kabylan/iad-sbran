@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Sbran.Domain.Data.Repositories
 {
@@ -42,6 +43,17 @@ namespace Sbran.Domain.Data.Repositories
 
             return user;
         }
+
+
+        public async Task<List<User>> GetByUserName(string userName)
+        {
+            var user = await _systemContext.Users.Where(ctx => ctx.Account.Contains(userName)).ToListAsync();
+
+            /*проверка на NULL*/
+
+            return user;
+        }
+
 
         // TODO: этот метод убрать отсюда
         public async Task<Guid> GetEmployeeId(Guid userId)

@@ -7,13 +7,14 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Sbran.Domain.Data.Repositories
 {
-	/// <summary>
-	/// Репозиторий сотрудников
-	/// </summary>
-	public sealed class EmployeeRepository : IEmployeeRepository
+    /// <summary>
+    /// Репозиторий сотрудников
+    /// </summary>
+    public sealed class EmployeeRepository : IEmployeeRepository
     {
         private readonly DomainContext _domainContext;
 
@@ -40,6 +41,13 @@ namespace Sbran.Domain.Data.Repositories
         {
             var employee = await _domainContext.Employees.Include<Employee, List<Invitation>>(test => test.Invitations).FirstOrDefaultAsync(empl => empl.Id == id);
 
+
+            string searchText = "";
+            _domainContext.Employees.Include(e => e.Passport)
+                .Where(e => e.Passport.NameRus.Contains(searchText) || e.Passport.NameEng.Contains(searchText) ||
+                e.Passport.SurnameRus.Contains(searchText) || e.Passport.SurnameEng.Contains(searchText) ||
+                e.Passport.PatronymicNameRus.Contains(searchText) || e.Passport.PatronymicNameEng.Contains(searchText));
+
             if (employee == null)
             {
                 throw new Exception($"Сотрудник для {id} не найден");
@@ -47,6 +55,29 @@ namespace Sbran.Domain.Data.Repositories
 
             return employee;
         }
+
+        /// <summary>
+        /// Получить сотрудников по ФИО
+        /// </summary>
+        /// <param name="id">Идентификатор иностранца</param>
+        /// <returns>Сотрудник</returns>
+        public async Task<List<Employee>> SearchAsync(string searchText)
+        {
+
+            var employees = _domainContext.Employees.Include(e => e.Passport)
+                .Where(e => e.Passport.NameRus.Contains(searchText) || e.Passport.NameEng.Contains(searchText) ||
+                e.Passport.SurnameRus.Contains(searchText) || e.Passport.SurnameEng.Contains(searchText) ||
+                e.Passport.PatronymicNameRus.Contains(searchText) || e.Passport.PatronymicNameEng.Contains(searchText))
+                .ToList();
+
+            if (employees == null)
+            {
+                throw new Exception($"Сотрудники для {searchText} не найден");
+            }
+
+            return employees;
+        }
+
 
         /// <summary>
         /// Получить сотрудника по идентификатору

@@ -12,7 +12,6 @@ namespace Sbran.Domain.Registries
         {
             serviceRegistry.Register<IUserRepository, UserRepository>();
             serviceRegistry.Register<IProfileRepository, ProfileRepository>();
-
             serviceRegistry.Register<IAlienRepository, AlienRepository>();
             serviceRegistry.Register<IContactRepository, ContactRepository>();
             serviceRegistry.Register<IPassportRepository, PassportRepository>();

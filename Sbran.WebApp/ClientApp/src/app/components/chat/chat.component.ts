@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChatService } from '../../services/chat.service';
 import { AuthService } from '../../services/auth.service';
 import * as signalR from '@aspnet/signalr';
 import { Target } from '@angular/compiler';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { APP_CONFIG, IAppConfig } from '../../settings/app-config';
+
 
 declare var $: any;
 
@@ -24,10 +27,15 @@ export class ChatComponent implements OnInit {
   receiver: string;
   chatDataJson: any;
   selectedUserid: string;
+  profileService: string;
 
   constructor(
     private router: Router,
-    private authService: AuthService) {
+    private authService: AuthService,
+    @Inject(APP_CONFIG) private config: IAppConfig,
+    private http: HttpClient) {
+
+    this.profileService = `${this.config.icsApiEndpoint}api/v1/profile/search`;
 
     this.chatDataJson = JSON.parse(`[{ 
     "userid": "alex@mail.ru",
@@ -176,5 +184,20 @@ export class ChatComponent implements OnInit {
 
     document.getElementById("chatroom").innerHTML = '';
 
-  } 
+  }
+
+
+  searchUsers(searchText: string): void {
+
+
+    const headers = new HttpHeaders().set('Content-Type', 'application/json'); // x-www-form-urlencoded
+    const options = { headers: headers };
+
+    let data = {
+      userName: searchText
+    }
+
+    this.http.get(this.profileService + `/${searchText}`).subscribe(responseData => console.log(responseData));
+  }
+
 }

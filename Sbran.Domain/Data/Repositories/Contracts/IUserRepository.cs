@@ -1,5 +1,6 @@
 ﻿using Sbran.Domain.Entities.System;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sbran.Domain.Data.Repositories.Contracts
@@ -8,6 +9,7 @@ namespace Sbran.Domain.Data.Repositories.Contracts
     {
         User Create(string account, string password, Profile profile);
         Task<User> Get(string userName, string password);
+        Task<List<User>> GetByUserName(string userName);
         Task<Guid> GetEmployeeId(Guid userId);
         Task<Guid> GetProfileId(Guid userId);
     }

@@ -23,9 +23,9 @@ namespace Sbran.WebApp.Controllers
         public AccountOldController(
             IProfileRepository profileRepository,
             IEmployeeRepository employeeRepository,
+            IUserRepository userRepository,
             DomainContext domainContext,
-            SystemContext systemContext,
-            IUserRepository userRepository)
+            SystemContext systemContext)
         {
             _userRepository = userRepository;
             _profileRepository = profileRepository;
@@ -84,5 +84,6 @@ namespace Sbran.WebApp.Controllers
 
             return Ok();
         }
+
     }
 }

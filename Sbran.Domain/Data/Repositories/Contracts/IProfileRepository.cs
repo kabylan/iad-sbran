@@ -13,6 +13,10 @@ namespace Sbran.Domain.Data.Repositories.Contracts
 
         Task<Profile[]> GetAllAsync();
 
+
+        //Task<Profile[]> GetByFilterAsynC();
+
+
         Task UpdateAsync(Guid profileId, ProfileDto newProfileData);
     }
 }

@@ -13,7 +13,9 @@ namespace Sbran.Domain.Data.Repositories.Contracts
         Task DeleteAsync(Guid id);
 
         Task<List<Employee>> GetAllAsync();
-
+        
+        Task<List<Employee>> SearchAsync(string searchText);
+        
         Task<Employee> GetAsync(Guid id);
 
         Task<Employee> GetByUserIdAsync(Guid userId);

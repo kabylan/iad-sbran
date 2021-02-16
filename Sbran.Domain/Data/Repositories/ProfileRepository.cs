@@ -6,6 +6,7 @@ using Sbran.Shared.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Sbran.Domain.Data.Repositories
 {
@@ -48,6 +49,18 @@ namespace Sbran.Domain.Data.Repositories
 
             return profiles;
         }
+
+        //public async Task<Profile[]> GetByFilterAsync(string searchText)
+        //{
+        //    var profiles = await _systemContext.Profiles.ToArrayAsync();
+
+        //    /*проверка на NULL*/
+        //    /* Фильтр сейчас только по ФИО, логин */
+        //    profiles.Where(p => p.)
+
+
+        //    return profiles;
+        //}
 
         public async Task<Profile> GetAsync(Guid id)
         {
