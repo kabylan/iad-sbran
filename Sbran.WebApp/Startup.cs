@@ -19,6 +19,7 @@ using Sbran.Domain.Chat;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 
+// this is startup
 namespace Sbran.WebApp
 {
 	public class Startup
